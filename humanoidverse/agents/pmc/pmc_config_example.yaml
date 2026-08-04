@@ -1,0 +1,99 @@
+# PMC Algorithm Configuration Example
+# Based on "Lifelike Agility and Play in Quadrupedal Robots"
+
+# Basic training configuration
+num_steps_per_env: 24
+num_learning_iterations: 5000
+num_learning_epochs: 5
+num_mini_batches: 4
+save_interval: 1000
+
+# PPO hyperparameters
+clip_param: 0.2
+gamma: 0.99
+lam: 0.95
+value_loss_coef: 1.0
+entropy_coef: 0.01
+max_grad_norm: 1.0
+use_clipped_value_loss: true
+
+# Learning rates
+actor_learning_rate: 3.0e-4
+critic_learning_rate: 1.0e-3
+schedule: "adaptive"
+desired_kl: 0.01
+
+# PMC specific parameters
+vq_loss_coef: 0.1  # Coefficient for VQ-VAE loss
+pretrain_iterations: 1000  # Number of pretraining iterations
+
+# Initialization
+init_noise_std: 1.0
+init_at_random_ep_len: true
+load_optimizer: false
+
+# Module configurations
+module_dict:
+  actor:
+    # VQ-VAE parameters
+    use_vq: true
+
+    latent_dim: 64
+    num_embeddings: 512
+
+    encoder_config:
+      type: 'MLP'
+      hidden_dims: [256, 128, 64]
+      activation: 'ReLU'
+    
+    # Input/output dimensions
+    input_dim: ['actor_obs']
+    output_dim: ['robot_action_dim']
+    
+    # Network architecture
+    layer_config:
+      type: 'MLP'
+      hidden_dims: [256, 128, 64]
+      activation: 'ReLU'
+      
+  critic:
+    input_dim: ['critic_obs']
+    output_dim: [1]
+    
+    layer_config:
+      type: 'MLP'
+      hidden_dims: [256, 128, 64, 32]
+      activation: 'ReLU'
+
+# Training phases
+training_phases:
+  # Phase 1: VQ-VAE pretraining on motion data
+  pretrain_vqvae:
+    enabled: true
+    iterations: 1000
+    learning_rate: 1.0e-3
+    reconstruction_loss_coef: 1.0
+    vq_loss_coef: 0.25
+    
+  # Phase 2: Policy learning with frozen VQ-VAE
+  adapt_policy:
+    enabled: true
+    freeze_vqvae: false
+    iterations: 3000
+    
+  # Phase 3: Fine-tuning both VQ-VAE and policy
+  finetune_all:
+    enabled: true
+    freeze_vqvae: false
+    iterations: 1000
+
+# Evaluation callbacks (optional)
+eval_callbacks:
+  video_recorder:
+    _target_: humanoidverse.agents.callbacks.video_recorder.VideoRecorderCallback
+    record_interval: 500
+    record_length: 200
+    
+  checkpoint_saver:
+    _target_: humanoidverse.agents.callbacks.checkpoint.CheckpointCallback
+    save_interval: 1000 

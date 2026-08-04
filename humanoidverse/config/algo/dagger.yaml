@@ -1,0 +1,55 @@
+# @package _global_
+
+algo:
+  _target_: humanoidverse.agents.dagger.dagger.DAgger
+  _recursive_: False
+  config:
+    
+    # Algorithm
+    num_learning_epochs: 5
+    num_mini_batches: 4
+    clip_param: 0.2
+    gamma: 0.99
+    lam: 0.95
+    value_loss_coef: 1.0
+    entropy_coef: 0.01
+    learning_rate: 1.e-3 # 5e-4 # 1.e-3
+    max_grad_norm: 1.0
+    use_clipped_value_loss: True
+    schedule: "adaptive"
+    desired_kl: 0.01
+    grad_penalty_coef_schedule: [0.002, 0.002, 700, 1000]
+
+    # BC
+    bc_loss_coef: 1.0
+
+    num_steps_per_env: 24
+
+    load_optimizer: True
+
+    use_fixed_noise_std: True
+    init_noise_std: 0.8
+    checkpoint: # the checkpoint to load
+
+    save_interval: 100
+
+    num_learning_iterations: 50000
+    init_at_random_ep_len: True
+    eval_callbacks: null
+
+    module_dict:
+      actor: 
+        input_dim: [actor_obs]
+        output_dim: [robot_action_dim]
+        layer_config:
+          type: MLP
+          hidden_dims: [512, 256, 128]
+          activation: ELU
+      teacher_actor: 
+        type: MLP
+        input_dim: [teacher_actor_obs]
+        output_dim: [robot_action_dim]
+        layer_config:
+          type: MLP
+          hidden_dims: [512, 256, 128]
+          activation: ELU

@@ -1,0 +1,156 @@
+# @package _global_
+
+robot:
+  # Observation parameters
+  dof_obs_size: ???
+  number_of_actions: ???
+  self_obs_max_coords: ???
+  num_bodies: ???
+
+  # Control parameters
+  # dof_body_ids: ???
+  # dof_offsets: ???
+
+  algo_obs_dim_dict: ???
+
+  key_bodies: null
+  contact_bodies: null
+
+  foot_name: null
+
+  init_state: null
+
+  contact_pairs_multiplier: 16
+
+  num_key_bodies: ${len:${robot.key_bodies}}
+  mimic_small_marker_bodies: null
+
+  randomize_link_body_names: ???
+
+  control:
+    # Can be "isaac_pd" or "P"/"V"/"T" for Proportional, Velocity, Torque control
+    control_type: isaac_pd
+    # PD Drive parameters:
+    stiffness: null
+    damping: null
+    # action scale: target angle = actionScale * action + defaultAngle
+    # only used in manual PD control
+    action_scale: 1.0
+    enable_residual: False
+    residual_joint_indices: []
+    # Used with isaac pd controller
+    isaac_pd_scale: False  # This is needed for the SMPL model due to weight variations
+    clamp_actions: 1.0
+    clip_torques: ???
+
+  asset:
+    collapse_fixed_joints: null
+    replace_cylinder_with_capsule: null
+    flip_visual_attachments: null
+    armature: null
+    thickness: null
+    max_angular_velocity: null
+    max_linear_velocity: null
+    density: null
+    angular_damping: null
+    linear_damping: null
+    disable_gravity: null
+    fix_base_link: null
+    default_dof_drive_mode: 1  # see GymDofDriveModeFlags (0 is none, 1 is pos tgt, 2 is vel tgt, 3 effort)
+
+    robot_type: ???
+    urdf_file: null
+    usd_file: null
+    xml_file: null
+    asset_root: "humanoidverse/data/robots"
+    self_collisions: True
+    filter_ints: null
+
+  motion:
+    memory_optimize: True
+    enable_failure_aware_resampling: False
+    enable_distribution_aware_resampling: False
+    distribution_weights_path: null
+    distribution_joint_indices: []
+    distribution_num_bins_per_joint: 8
+    segment_duration_s: 1.0
+    distribution_min_uniform_ratio: 0.1
+    distribution_strength: 0.5
+    combined_mode: mixture
+    combined_distribution_weight: 0.2
+    combined_failure_weight: 0.4
+    combined_distribution_weight_final: 0.05
+    combined_failure_weight_final: 0.55
+    combined_handoff_start_steps: 48000
+    combined_handoff_ramp_steps: 48000
+    combined_distribution_guard: False
+    combined_guard_refresh_steps: 12000
+    combined_guard_topk_fraction: 0.1
+    combined_guard_disable_steps: 24000
+    combined_guard_conflict_threshold: 0.75
+    combined_guard_gate_loss_threshold: 0.25
+    combined_guard_min_failure_confidence: 0.05
+    combined_guard_pool_survival_margin_s: 2.0
+    combined_force_failure_disable_steps: 24000
+    tracking_aware_hard_window: False
+    tracking_error_ema_alpha: 0.05
+    tracking_error_scale: 0.35
+    tracking_quality_floor: 0.2
+    tracking_joint_error_weight: 0.25
+    uniform_mix_ratio: 0.3
+    max_sampling_probability_ratio: 4.0
+    distribution_warmup_steps: 24000
+    distribution_ramp_steps: 24000
+    failure_warmup_steps: 48000
+    failure_ramp_steps: 48000
+    failure_priority_mode: frontier
+    hard_window_replay: False
+    hard_window_ratio: 0.2
+    hard_window_distribution_ratio: 0.2
+    hard_window_failure_ratio: 0.0
+    hard_window_use_combined_distribution_weight: False
+    hard_window_top_k: 8
+    hard_window_lookback_s: 4.0
+    hard_window_jitter_s: 0.5
+    hard_window_refresh_steps: 24000
+    hard_window_max_probability_ratio: 8.0
+    failure_credit_lookback_s: 5.0
+    failure_credit_decay_s: 2.0
+    hard_window_immediate_failure_s: 1.0
+    hard_window_immediate_failure_threshold: 0.35
+    hard_window_immediate_failure_min_exposures: 32
+    hard_window_terminal_suppression_floor: 0.1
+    suppress_immediate_failure_terminal_probability: False
+    hard_window_max_lookback_s: 8.0
+    failure_regression_weight: 0.0
+    frontier_window_ratio: 0.2
+    frontier_window_top_k: 4
+    frontier_window_refresh_steps: 24000
+    frontier_window_max_probability_ratio: 16.0
+    frontier_failure_threshold: 0.35
+    frontier_confidence_threshold: 0.1
+    frontier_span_s: 20.0
+    frontier_earliest_contiguous: False
+    frontier_crossing_margin_s: 1.0
+    frontier_advance_success_threshold: 0.6
+    frontier_min_attempts: 256
+    frontier_mastered_threshold: 0.8
+    frontier_impossible_threshold: 0.02
+    failure_rate_epsilon: 1.0e-3
+    failure_rate_ema_alpha: 0.05
+    failure_bias_strength: 2.0
+    min_samples_for_stats: 1000
+    failure_confidence_exposure: 10000
+    failure_stats_update_interval_steps: 100
+    strict_distribution_weights: True
+    uniform_start_curriculum: False
+    resampling_log_interval_steps: 100
+    resampling_snapshot_interval_steps: 12000
+    # Legacy compatibility only; dynamic segmentation uses segment_duration_s.
+    num_time_segments: 10
+
+# motion_lib:
+#   _target_: phys_anim.utils.motion_lib.MotionLib
+#   motion_file: ${motion_file}
+#   ref_height_adjust: 0.
+#   fix_motion_heights: True

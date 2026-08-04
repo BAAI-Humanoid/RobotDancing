@@ -1,0 +1,7 @@
+# @package _global_
+
+defaults:
+  - /algo: mh_ppo # ppo, mh_ppo, pmc, dagger
+  - /env: motion_tracking
+
+experiment_name: TEST_Motion_Tracking

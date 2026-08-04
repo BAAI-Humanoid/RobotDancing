@@ -1,0 +1,59 @@
+# @package _global_
+
+robot:
+  motion:
+    enable_distribution_aware_resampling: True
+    enable_failure_aware_resampling: True
+    combined_mode: mixture
+
+    # Early coverage, then hand off to failure-dominant replay.
+    combined_distribution_weight: 0.15
+    combined_failure_weight: 0.35
+    combined_distribution_weight_final: 0.0
+    combined_failure_weight_final: 0.65
+    combined_handoff_start_steps: 48000
+    combined_handoff_ramp_steps: 48000
+
+    # Disable distribution whenever it conflicts with reliable failure/frontier
+    # statistics or underperforms the other online sampling pools.
+    combined_distribution_guard: True
+    combined_guard_refresh_steps: 12000
+    combined_guard_topk_fraction: 0.1
+    combined_guard_disable_steps: 24000
+    combined_guard_conflict_threshold: 0.75
+    combined_guard_gate_loss_threshold: 0.25
+    combined_guard_min_failure_confidence: 0.05
+    combined_guard_pool_survival_margin_s: 2.0
+    combined_force_failure_disable_steps: 24000
+
+    # Contextual replay makes combined a strict extension of failure replay:
+    # uniform coverage + direct failure prior + tracking-aware hard/frontier
+    # windows. 0624 runs showed survival gains can come with worse tracking
+    # error; keep hard/frontier replay useful but not dominant.
+    hard_window_replay: True
+    tracking_aware_hard_window: True
+    tracking_error_ema_alpha: 0.05
+    tracking_error_scale: 0.35
+    tracking_quality_floor: 0.25
+    tracking_joint_error_weight: 0.25
+    hard_window_ratio: 0.15
+    hard_window_failure_ratio: 0.35
+    hard_window_distribution_ratio: 0.10
+    hard_window_use_combined_distribution_weight: True
+    hard_window_lookback_s: 8.0
+    hard_window_max_lookback_s: 12.0
+    hard_window_immediate_failure_threshold: 0.7
+    hard_window_immediate_failure_min_exposures: 64
+    hard_window_terminal_suppression_floor: 0.1
+    suppress_immediate_failure_terminal_probability: True
+    failure_regression_weight: 0.75
+    frontier_window_ratio: 0.15
+    hard_window_top_k: 12
+    frontier_window_top_k: 6
+    frontier_earliest_contiguous: True
+    frontier_crossing_margin_s: 5.0
+    hard_window_max_probability_ratio: 8.0
+    frontier_window_max_probability_ratio: 16.0
+
+    uniform_mix_ratio: 0.35
+    failure_bias_strength: 1.25

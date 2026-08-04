@@ -1,0 +1,122 @@
+# @package _global_
+
+# Be careful when using _raw, history
+obs:
+  obs_dict:
+    actor_obs: [
+      base_ang_vel, # proprioception
+      base_rot,
+      dof_pos,
+      dof_vel,
+      actions, 
+      base_lin_vel, # privileged info
+      base_pos,
+      local_foot_pos,
+      feet_contact_mask,
+      ref_dof_pos, # reference joint position
+      ref_dof_vel,
+      ref_base_lin_vel,
+      ref_base_ang_vel,
+      ref_base_pos,
+      ref_base_rot,
+      ref_local_foot_pos,
+      selected_keypoints_pos,
+    ]
+
+    critic_obs: [
+      base_ang_vel, # proprioception
+      base_rot,
+      dof_pos,
+      dof_vel,
+      actions, 
+      base_lin_vel, # privileged info
+      base_pos,
+      local_foot_pos,
+      feet_contact_mask,
+      ref_dof_pos, # reference joint position
+      ref_dof_vel,
+      ref_base_lin_vel,
+      ref_base_ang_vel,
+      ref_base_pos,
+      ref_base_rot,
+      ref_local_foot_pos,
+      selected_keypoints_pos,
+    ]
+
+  obs_auxiliary: # define those coumpounds in obs_dict, for example, you can define different long/short history with different length
+    history: {
+      dof_pos: 5,
+      dof_vel: 5,
+      actions: 5,
+    }
+
+  obs_scales: {
+    base_lin_vel: 2.0,
+    base_ang_vel: 0.25,
+    base_pos: 1.0,
+    base_rot: 1.0,
+    local_foot_pos: 1.0,
+    dof_pos: 1.0,
+    dof_vel: 0.05,
+    actions: 1.0,
+    ref_base_lin_vel: 2.0,
+    ref_base_ang_vel: 0.25,
+    ref_base_pos: 1.0,
+    ref_base_rot: 1.0,
+    ref_dof_pos: 1.0,
+    ref_dof_vel: 0.05,
+    selected_keypoints_pos: 1.0,
+    feet_contact_mask: 1.0,
+    ref_local_foot_pos: 1.0,
+  }
+
+  noise_scales: {
+    base_lin_vel: 0.0,
+    base_ang_vel: 0.3,
+    base_rot: 0.2,
+    local_foot_pos: 0.2,
+    base_pos: 0.2,
+    dof_pos: 0.01,
+    dof_vel: 1.0,
+    actions: 0.0,
+    ref_base_lin_vel: 0.0,
+    ref_base_ang_vel: 0.0,
+    ref_base_pos: 0.0,
+    ref_base_rot: 0.0,
+    ref_dof_pos: 0.0,
+    ref_dof_vel: 0.0,
+    selected_keypoints_pos: 0.0,
+    feet_contact_mask: 0.0,
+    ref_local_foot_pos: 0.0,
+  }
+
+  add_noise_currculum: False
+  noise_initial_value: 0.05
+  noise_value_max: 1.0
+  noise_value_min: 0.00001
+  soft_dof_pos_curriculum_degree: 0.00001
+  soft_dof_pos_curriculum_level_down_threshold: 90
+  soft_dof_pos_curriculum_level_up_threshold: 92
+
+
+  obs_dims:
+    - base_lin_vel: 3
+    - base_ang_vel: 3
+    - base_pos: 3
+    - base_rot: 3
+    - dof_pos: ${robot.dof_obs_size}
+    - dof_vel: ${robot.dof_obs_size}
+    - local_foot_pos: ${eval:'3 * ${robot.num_feet}'}
+    - actions: ${robot.dof_obs_size}
+    - ref_base_lin_vel: 3
+    - ref_base_ang_vel: 3
+    - ref_base_pos: 3
+    - ref_base_rot: 3
+    - ref_dof_pos: ${robot.dof_obs_size}
+    - ref_dof_vel: ${robot.dof_obs_size}
+    - selected_keypoints_pos: ${eval:'3 * ${robot.motion.nums_motion_tracking_selected_keypoints}'}
+    - feet_contact_mask: ${robot.num_feet}
+    - ref_local_foot_pos: ${eval:'3 * ${robot.num_feet}'}
+
+
+  post_compute_config: {} # Will store values after preprocessing, don't put anything here

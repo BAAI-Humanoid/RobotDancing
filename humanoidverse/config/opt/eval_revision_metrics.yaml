@@ -1,0 +1,47 @@
+# @package _global_
+
+headless: True
+num_envs: 20
+use_wandb: False
+export_policy: False
+export_onnx: False
+enable_keyboard_listener: False
+
+domain_rand:
+  push_robots: False
+  max_push_vel_xy: 0.0
+  randomize_base_com: False
+  randomize_link_mass: False
+  randomize_pd_gain: False
+  randomize_friction: False
+  randomize_base_mass: False
+  randomize_torque_rfi: False
+  rfi_lim: 0.0
+  randomize_rfi_lim: False
+  randomize_ctrl_delay: False
+  ctrl_delay_step_range: [0, 0]
+
+env:
+  config:
+    noise_to_initial_level: 0
+    enforce_randomize_motion_start_eval: False
+    eval_fixed_start_grid: True
+    eval_fixed_start_interval_s: 1.0
+    eval_fixed_start_offset_s: 0.0
+    max_episode_length_s: 100000
+
+algo:
+  config:
+    eval_callbacks:
+      revision_metrics:
+        _target_: humanoidverse.agents.callbacks.revision_metrics.RevisionMetricsCallback
+        config:
+          rollout_count: 20
+          bin_size_s: 15.0
+          start_interval_s: ${env.config.eval_fixed_start_interval_s}
+          start_offset_s: ${env.config.eval_fixed_start_offset_s}
+          protocol: fixed_grid
+          evaluation_mode: nominal
+          output_dir: ${eval_log_dir}/revision_metrics
+          checkpoint: ${checkpoint}
+          seed: ${seed}

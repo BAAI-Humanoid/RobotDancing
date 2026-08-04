@@ -1,0 +1,25 @@
+# @package _global_
+
+robot:
+  motion:
+    enable_distribution_aware_resampling: True
+    enable_failure_aware_resampling: True
+    combined_distribution_weight: 0.2
+    combined_failure_weight: 0.4
+    combined_distribution_weight_final: 0.05
+    combined_failure_weight_final: 0.55
+    combined_handoff_start_steps: 48000
+    combined_handoff_ramp_steps: 48000
+    hard_window_replay: True
+    # 40% uniform + 20% distribution + 20% global hard replay
+    # + 20% earliest reachable frontier replay.
+    hard_window_ratio: 0.2
+    hard_window_distribution_ratio: 0.2
+    frontier_window_ratio: 0.2
+    hard_window_top_k: 8
+    frontier_window_top_k: 4
+    hard_window_refresh_steps: 24000
+    frontier_window_refresh_steps: 24000
+    hard_window_immediate_failure_threshold: 0.35
+    frontier_mastered_threshold: 0.8
+    frontier_impossible_threshold: 0.02

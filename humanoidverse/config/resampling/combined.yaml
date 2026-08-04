@@ -1,0 +1,14 @@
+# @package _global_
+
+robot:
+  motion:
+    enable_distribution_aware_resampling: True
+    enable_failure_aware_resampling: True
+    # Establish broad pose coverage first, then hand off most adaptive mass
+    # to failure replay once the online statistics become reliable.
+    combined_distribution_weight: 0.2
+    combined_failure_weight: 0.4
+    combined_distribution_weight_final: 0.05
+    combined_failure_weight_final: 0.55
+    combined_handoff_start_steps: 48000
+    combined_handoff_ramp_steps: 48000

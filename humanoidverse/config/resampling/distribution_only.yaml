@@ -1,0 +1,6 @@
+# @package _global_
+
+robot:
+  motion:
+    enable_distribution_aware_resampling: True
+    enable_failure_aware_resampling: False
