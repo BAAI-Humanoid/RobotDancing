@@ -1,7 +1,5 @@
-const backgroundVideo=document.querySelector('.hero video');
-const pauseButton=document.getElementById('pause');
+const backgroundVideo=document.querySelector('.teaser video');
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)backgroundVideo.pause();
-pauseButton.addEventListener('click',()=>{if(backgroundVideo.paused){backgroundVideo.play().catch(()=>{});pauseButton.textContent='Ⅱ';pauseButton.setAttribute('aria-label','Pause background video')}else{backgroundVideo.pause();pauseButton.textContent='▶';pauseButton.setAttribute('aria-label','Play background video')}});
 document.getElementById('copy-citation').addEventListener('click',async()=>{
   const text=document.getElementById('bibtex').textContent;
   const status=document.getElementById('copy-status');
