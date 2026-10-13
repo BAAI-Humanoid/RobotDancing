@@ -3,7 +3,8 @@
 <p align="center"><strong>Residual-Action Reinforcement Learning Enables Robust Long-Horizon Humanoid Motion Tracking</strong></p>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2509.20717">Paper</a> |
+  <a href="https://baai-humanoid.github.io/RobotDancing/">Project</a> |
+  <a href="https://ieeexplore.ieee.org/document/11652927">Paper</a> |
   <a href="#installation">Installation</a> |
   <a href="#training">Training</a> |
   <a href="#citation">Citation</a>
