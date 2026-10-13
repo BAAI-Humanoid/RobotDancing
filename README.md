@@ -120,10 +120,11 @@ This project is released under the [MIT License](LICENSE). Robot assets and moti
 ## Citation
 
 ```bibtex
-@article{sun2025robotdancing,
-  title   = {RobotDancing: Residual-Action Reinforcement Learning Enables Robust Long-Horizon Humanoid Motion Tracking},
-  author  = {Sun, Zhenguo and Peng, Yibo and Meng, Yuan and Li, Xukun and Huang, Bo-Sheng and Bing, Zhenshan and Wang, Xinlong and Knoll, Alois},
-  journal = {arXiv preprint arXiv:2509.20717},
-  year    = {2025}
+@article{sun2026robotdancing,
+  title={Robotdancing: Residual-action reinforcement learning enables robust long-horizon humanoid motion tracking},
+  author={Sun, Zhenguo and Peng, Yibo and Meng, Yuan and Li, Xukun and Sun, Yu and Jiang, Haojun and Huang, Bo-Sheng and Bing, Zhenshan and Wang, Xinlong and Knoll, Alois},
+  journal={IEEE Robotics and Automation Letters},
+  year={2026},
+  publisher={IEEE}
 }
 ```
