@@ -22,6 +22,8 @@ Thumbs.db
 
 # Large media files
 *.mp4
+!docs/assets/hero.mp4
+!docs/assets/main-video.mp4
 *.tiff
 *.avi
 *.flv
